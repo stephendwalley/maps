@@ -230,15 +230,15 @@ class Camera extends React.Component {
     }
 
     if (c.followUserLocation && !n.followUserLocation) {
-      this.refs.camera.setNativeProps({ followUserLocation: false });
+      this.cameraRef.setNativeProps({ followUserLocation: false });
       return;
     }
     if (!c.followUserLocation && n.followUserLocation) {
-      this.refs.camera.setNativeProps({ followUserLocation: true });
+      this.cameraRef.setNativeProps({ followUserLocation: true });
     }
 
     if (n.followUserLocation) {
-      this.refs.camera.setNativeProps({
+      this.cameraRef.setNativeProps({
         followUserMode: n.followUserMode,
         followPitch: n.followPitch || n.pitch,
         followHeading: n.followHeading || n.heading,
@@ -248,17 +248,17 @@ class Camera extends React.Component {
     }
 
     if (n.maxBounds) {
-      this.refs.camera.setNativeProps({
+      this.cameraRef.setNativeProps({
         maxBounds: this._getMaxBounds(),
       });
     }
     if (n.minZoomLevel) {
-      this.refs.camera.setNativeProps({
+      this.cameraRef.setNativeProps({
         minZoomLevel: this.props.minZoomLevel,
       });
     }
     if (n.maxZoomLevel) {
-      this.refs.camera.setNativeProps({
+      this.cameraRef.setNativeProps({
         maxZoomLevel: this.props.maxZoomLevel,
       });
     }
@@ -550,7 +550,7 @@ class Camera extends React.Component {
       cameraConfig = this._createStopConfig(config);
     }
 
-    this.refs.camera.setNativeProps({ stop: cameraConfig });
+    this.cameraRef.setNativeProps({ stop: cameraConfig });
   }
 
   _createDefaultCamera() {
@@ -641,7 +641,9 @@ class Camera extends React.Component {
     return (
       <RCTMGLCamera
         testID="Camera"
-        ref="camera"
+        ref={(ref) => {
+          this.cameraRef = ref;
+        }}
         followUserLocation={this.props.followUserLocation}
         followUserMode={this.props.followUserMode}
         followPitch={this.props.followPitch}
